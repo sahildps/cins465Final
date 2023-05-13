@@ -1,0 +1,81 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Add New Recipe</title>
+        {% include "bootstrap.html" %}
+        <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
+        <style>
+          textarea {
+            font-family: 'Pacifico', cursive;
+          }
+          table{
+            width:800px;
+            position:absolute;
+            margin-left: 20px;
+            margin-top:30px;
+            color:black;
+            
+        }
+        table th,td{
+           padding-top:20px;
+           font-size:20px;
+        }
+        .button{
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            -webkit-transition-duration: 0.4s; /* Safari */
+            transition-duration: 0.4s;
+            font-size: 20px;
+        }
+        .cancel{
+            background-color: red; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            -webkit-transition-duration: 0.4s; /* Safari */
+            transition-duration: 0.4s;
+            font-size: 20px;
+        }
+        
+          
+        </style>
+    </head>
+    <body style="background-color:bisque">
+
+        {% include "nav.html" %}
+        <div style="background-image: url('/static/add.png');background-repeat:no-repeat;width:auto; height: 615px;" >
+            <br><br>
+            <h1 style="margin-left: 10px;color:green;">Add Recipe</h1>
+            <form enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                <table>
+                    {{ form_data.as_table }}
+                    <tr>
+                        <td></td>
+                        <td>
+                            <a href="/recipes/" class="cancel">Cancel</a>
+                            
+                            <input type="submit" class="button" name="add" value="Create">
+                           <!-- <button type="submit"  >Add!</button>-->
+                        </td>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </body>
+</html>

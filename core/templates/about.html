@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    {% load static %}
+    <link rel="stylesheet" href="{%static 'project1/sudoku.css' %}" />
+    {% include "bootstrap.html" %}
+
+    <style>
+      .about {
+        display: inline-block;
+        width: 600px;
+        margin-left: 100px;
+        align-items: center;
+      }
+      h5 {
+        text-align: justify;
+        width: 400px;
+      }
+      h2 {
+        color: green;
+
+        position: relative;
+        margin-left: 100px;
+      }
+    </style>
+  </head>
+  <body style="background-color: blanchedalmond">
+    {% include "nav.html" %}
+    <h2>
+      This project is implemented on Python/Django stack and hosted on GCP
+    </h2>
+    <br /><br />
+    <div class="about">
+      <h2>Sahil D Shetty</h2>
+
+      <br /><br />
+      <h5>
+        Hi, my name is Sahil. I am from Mumbai, India. I am a final year
+        graduate student at Chico State. My dream is to build my product some
+        day and make a difference in the field of technology. Cloud services is
+        really overwhelming and interesting which I intend to gain expertise on.
+        I enjoy travelling and exploring new places. I enjoy playing football
+        and listen to retro bolywood music.
+      </h5>
+      <br />
+
+      <img
+        src="{%static 'sahil.jpeg' %}"
+        width="300px"
+        height="300px"
+        style="align-self: center"
+      />
+    </div>
+
+    <div class="about">
+      <h2>Priyanka V Rao</h2>
+      <br /><br />
+      <h5>
+        I am from Bangalore, India. A city with a wonderful weather! 🙂 I moved
+        to USA in Aug 2021. I had a wonderful summer internship at FedEx
+        Services. I like watching movies/series, reading books and sketching. My
+        favorite author is Dan Brown. I would want to travel the entire world
+        before I start to get old :P
+      </h5>
+      <br /><br /><br /><br />
+      <img src="{%static 'Priyanka.jpeg' %}" width="300px" height="300px" />
+    </div>
+    <div class="about">
+      <br /><br />
+      <h2>Nandini</h2>
+      <br />
+      <h5>
+        My name is Nandini Raut and I am an undergraduate computer science
+        student at Chico State. I am currently in my junior year. I am an
+        aspiring software engineer. My hobbies include visiting museums and
+        galleries, traveling, collecting travel souvenirs and vintage items,
+        trying diverse varieties of world cuisines, and writing.
+      </h5>
+      <br /><br /><br /><br />
+      <img src="{%static 'nancy.jpeg' %}" width="300px" height="300px" />
+    </div>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+<html>
+  <head>
+    {% include "bootstrap.html" %} {% load static %}
+    <style>
+      table {
+        width: 600px;
+        position: absolute;
+        margin-left: 800px;
+        margin-top: 100px;
+        color: white;
+      }
+      table th,
+      td {
+        padding-top: 30px;
+        font-size: 30px;
+      }
+      button {
+        background-color: #4caf50; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+        font-size: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    {% include "nav.html" %}
+
+    <div
+      style="
+        background-image: url('/static/ingri.jpeg');
+        width: 1800px;
+        height: 635px;
+      "
+    >
+      <form method="POST">
+        {% csrf_token %}
+
+        <table>
+          {{ join_form.as_table }}
+          <tr>
+            <td>
+              <button type="submit">Register!</button>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </body>
+</html>

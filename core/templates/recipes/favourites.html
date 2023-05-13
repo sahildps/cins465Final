@@ -1,0 +1,141 @@
+<html>
+
+  <head>
+    <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
+
+    <!--<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script> -->  
+    <!--<script src="jquery-3.6.0.min.js"></script>-->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+
+    <!--bootstrap includes-->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>-->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+
+
+    
+</head>
+  
+ 
+  {% load static %}
+  <script>
+
+$(document).ready(function () {
+    console.log("yaha");
+    $('#example').DataTable({
+      
+      
+
+    });
+    });
+function confirmDeleteModal(id) {
+        console.log("here");
+        $('#deleteModal').modal();  
+        //$('#deleteButton').html('<a href="?delete='+id+'" class="btn btn-danger" onclick="return closeDeleteModal('+id+')">Delete</a>');
+        $('#deleteButton').html('<a href="/books/delete/'+id+'/" class="btn btn-danger" onclick="return closeDeleteModal('+id+')">Delete</a>');
+}
+
+function closeDeleteModal(id) {
+  $('#deleteModal').modal('hide');
+  return true
+}
+
+  function togglecolor(rowid){
+    console.log(rowid);
+    var background = document.getElementById('wishbtn').style.backgroundColor;
+    console.log(background)
+    if (background == "green") {
+        document.getElementById('wishbtn').style.background = "red";
+        //console.log("red");
+        document.location.href="/recipes/addwishlist/"+rowid;
+        
+    } else {
+        document.getElementById('wishbtn').style.background = "green";
+        //console.log("green");
+        document.location.href="/recipes/remwishlist/"+rowid;
+    }
+  }
+
+  </script>
+  <style>
+    .buttons{
+      background-color: green; /* Green */
+      
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 800;
+      margin: 4px 2px;
+      cursor: pointer;
+      -webkit-transition-duration: 0.4s; /* Safari */
+      transition-duration: 0.4s;
+      
+    }
+    
+    
+  </style>
+
+
+
+<body style="background-color: blanchedalmond">
+  {% include "nav.html" %}
+  <div class="" style="margin-left:100px;margin-right:100px;">
+    <br><br>
+
+    {% if not table_data %}
+    </p>No Items Available Right Now.</p>
+    {% else %}
+<!--<table id="books-table" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">-->
+  <table id="example" class="table table-striped table-bordered" style="width:100%" data-page-size="5">
+    <thead>
+      <tr>
+        <tr>
+          <!-- <th>Book ID</th> -->
+          <th>Cuisine</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Ingredients</th>
+          <th>Display Picture</th>
+          <!-- <th></th> -->
+        </tr>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in table_data %}
+      <tr>
+        <!-- <td>{{ row.book_id.book_id }}</td> -->
+        <td style="font-weight: bolder;">{{ row.recipe_id.cuisine }}</td>
+        <td style="font-weight: bolder;">{{ row.recipe_id.title }}</td>
+        <td style="font-weight: bolder;">{{ row.recipe_id.description }}</td>
+        <td style="font-weight: bolder;">{{ row.recipe_id.ingredients }}</td>
+             
+       <td><img src="{{ row.recipe_id.display_picture.url }}" class="image_responsive" height="100px" width="100px"></td>
+        
+        
+      </tr>
+      {% endfor %}
+    </tbody>
+    </table>
+    {% endif %}
+    
+  </div>
+
+ 
+
+</body>
+
+</html>
+
+  
+

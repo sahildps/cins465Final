@@ -1,0 +1,153 @@
+<html>
+
+  <head>
+    <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
+
+    <!--<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script> -->  
+    <!--<script src="jquery-3.6.0.min.js"></script>-->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+
+    <!--bootstrap includes-->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>-->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+
+
+    
+</head>
+  
+ 
+  {% load static %}
+  <script>
+
+$(document).ready(function () {
+    console.log("yaha");
+    //getjsondata();
+    $('#example').DataTable({
+      
+      
+
+    });
+    });
+   
+
+    function addele(){
+        var value=document.getElementById("ingredient").value;
+        console.log(value);
+        var ul=document.getElementById("lofingreds");
+        var li = document.createElement('li');
+        li.appendChild(document.createTextNode(value));
+        li.setAttribute("id",value);        
+        var button = document.createElement('button');
+        button.innerHTML="Remove";        
+        li.innerHTML+='&emsp;'
+        li.appendChild(button);
+        ul.appendChild(li);
+        button.onclick=function(){
+            const element = document.getElementById(value);
+            element.remove();
+        }
+        document.getElementById("ingredient").value="";
+        
+    }
+    function removele(rowid){
+        console.log("called");
+        const element = document.getElementById(rowid);
+        console.log(element);
+        element.remove(); 
+    }
+    function senddata(){
+        var listofitems=[]
+        var ul = document.getElementById("lofingreds");
+        var items = ul.getElementsByTagName("li");
+        console.log(items.length);
+        data={
+            "data":listofitems
+        }
+        for (var i = 0; i < items.length; ++i) {
+                listofitems.push(items[i].id);
+        }
+        console.log(listofitems);
+        $.ajax({
+        url: '/recipes/addingreds/',
+        type: 'POST',
+        dataType: 'json',
+        data: data
+            
+        ,
+        success: function(response){
+           console.log("yayy");
+           if(response==200){
+            location.reload();
+           }
+
+   }
+});
+
+    }
+
+
+ 
+
+  </script>
+ 
+ <style>
+    .button {
+      border: none;
+      color: white;
+      padding: 10px 24px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
+    
+    .button1 {background-color: #4CAF50;} 
+    .button2 {background-color: #008CBA;} 
+    .button3 {background-color: Black} 
+    </style>
+
+
+
+<body style="background-color: blanchedalmond">
+  {% include "nav.html" %}
+  <div class="" style="margin-left:100px;margin-right:100px;">
+    <br><br>
+    <input type="text" id="ingredient">
+    <button class="button button3" onclick='addele()'>Add ingredient</button><br><br>
+    <ul id="lofingreds">
+        {% for row in table_data %}   
+       
+            <li id="{{row}}">
+                {{row}}&emsp;<button class="button button2" onclick='removele("{{row}}")'>Remove</button>
+                <br>
+            </li>
+        
+        {% endfor %}
+
+    {% if not table_data %}
+    </p>No Items Available Right Now.</p>
+    {% endif %}
+  
+     <br><br>
+    <button class="button button1" onclick="senddata()">Submit</button>
+    
+  </div>
+
+ 
+
+</body>
+
+</html>
+
+  
+

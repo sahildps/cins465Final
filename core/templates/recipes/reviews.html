@@ -1,0 +1,228 @@
+<html>
+    <head>
+        <head>
+            <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">-->
+            <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
+        
+            <!--<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script> -->  
+            <!--<script src="jquery-3.6.0.min.js"></script>-->
+            <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+            <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+            <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+        
+            <!--bootstrap includes-->
+            <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+            <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+           <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>-->
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+              
+            <!--Star rating-->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+        
+    </head>
+    <style>
+      
+      .checked {
+          color: orange;
+      }
+      .con1{
+        margin-left: 500px;
+        position: absolute;
+
+        
+        
+
+      }
+      .buttons{
+      background-color: green; /* Green */
+      
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 800;
+      margin: 4px 2px;
+      cursor: pointer;
+      -webkit-transition-duration: 0.4s; /* Safari */
+      transition-duration: 0.4s;
+      
+    }
+      .con2{
+
+        margin-top: -70px;
+
+      }
+      .example{
+        width:500px;
+      }
+      .stars{
+        font-size: 40px;
+        cursor: pointer;
+      }
+
+      input{
+        height: 70px;
+        width:400px;
+      }
+  </style>
+  <script>
+    var rating=0;
+    function checkrating(number){
+      //console.log("here");
+      //console.log(rating);
+      rating=number;
+      console.log(rating);
+      for(var i=1;i<=5;i++){
+        var star=document.getElementById("s"+i);
+        star.style.color="black";
+      }
+      for(var i=1;i<=rating;i++){
+        var star=document.getElementById("s"+i);
+        star.style.color="orange";
+      }
+      
+    }
+
+    function postData(recipeid){
+      var review_text=document.getElementById("review_text").value;
+      console.log(review_text);
+      data={
+        "review_text":review_text,
+        "review_rating":rating
+
+      }
+      console.log(data);
+      console.log("recipeid",recipeid);
+      $.ajax({
+          url:'/recipes/add_review/'+recipeid+'/',
+          data:data,
+          type:"POST",
+          dataType: 'json',
+          success:function(){
+            console.log("yayy");
+            location.reload();
+          }
+        })
+    }
+  </script>
+
+    <body style="background-color:aliceblue">
+        {% include "nav.html" %}
+        <div class="" style="margin-left:100px;margin-right:100px;">
+          <br><br>
+
+          {% if recipe_data %}
+          <!-- <h1>Yo</h1> -->
+            <!-- <h1>{{recipe_data.recipe_id.title}}</h1> -->
+            <div class="con1">
+              <h2 style="color:chocolate;font-family: curive;font-weight: bolder;">Name:{{recipe_data.title}}</h1>
+              <h3 style="color:darkcyan;font-family: cursive;font-weight: bold;">Description:{{recipe_data.description}}</h3>
+              <h3 style="color:darkcyan;font-family: cursive;font-weight: bold;">Ingredients:{{recipe_data.ingredients}}</h3>
+                {% if avg_rating %}
+                <h3 style="color:crimson;font-family: cursive;font-weight: bold;">Overall Rating:</h3>
+                <span class="fa fa-star {% if avg_rating > 0 %} checked {% endif %}"></span>
+                <span class="fa fa-star {% if avg_rating > 1 %} checked {% endif %}"></span>
+                <span class="fa fa-star {% if avg_rating > 2 %} checked {% endif %}"></span>
+                <span class="fa fa-star {% if avg_rating > 3 %} checked {% endif %}" ></span>
+                <span class="fa fa-star {% if avg_rating > 4 %} checked {% endif %}"></span>
+                {% endif %}
+
+          </div >
+            
+            <!-- <img src="{{ recipe_data.recipe_id.display_picture.url }}" class="image_responsive" height="400px" width="400px"> -->
+            <div class="con2">
+            <img src="{{ recipe_data.display_picture.url }}" class="image_responsive" height="500px" width="400px">
+          </div>
+          {% endif %}
+      
+          {% if not form_data %}
+          </p>No Items Available Right Now.</p>
+          {% else %} 
+
+          <!-- <h1>{{recipe_data.title}}</h1> -->
+          
+          
+<!--<table id="recipes-table" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">-->
+    <table id="example" class="table table-striped table-bordered" style="width:50%;position: absolute;margin-left: 500px;margin-top: -200px;" data-page-size="5">
+        <thead>
+          <tr>
+            <tr>
+              <th >User</th>
+              <!-- <th>Recipe_ID</th>
+              <th>Title</th> -->
+              <th>Review</th>
+              <!-- <th>Rating</th> -->
+              <!-- <th></th> -->
+            </tr>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in form_data %}
+          <tr>
+            <td style="font-weight: bolder;">{{ row.user }}</td>
+            <!-- <td>{{ row.recipe_id.recipe_id }}</td>
+            <td>{{ row.recipe_id.title }}</td> -->
+            <td>{{ row.review_text }}
+              <br>
+            <!-- <td>{{ row.review_rating }}</td> -->
+              
+            <span class="fa fa-star {% if row.review_rating > 0 %} checked {% endif %}"></span>
+            <span class="fa fa-star {% if row.review_rating > 1 %} checked {% endif %}"></span>
+            <span class="fa fa-star {% if row.review_rating > 2 %} checked {% endif %}"></span>
+            <span class="fa fa-star {% if row.review_rating > 3 %} checked {% endif %}" ></span>
+            <span class="fa fa-star {% if row.review_rating > 4 %} checked {% endif %}"></span>
+          </td>
+        </tr>
+
+        <!--<a class="buttons" href="/recipes/add_review/{{ row.recipe_id.id }}/">Add Reviews</a>-->
+        {% endfor %}
+        
+        <!-- <a class="buttons" href="/recipes/add_review/{{recipe_id}}">Add Reviews</a> -->
+        
+      </tbody>
+      </table>
+      {% endif %}
+      <br>
+
+      {% if not user.is_superuser %}
+      <h3>Rate this recipe!</h3>
+
+      {% csrf_token %}
+          <!-- <input type="text" id="review_text" size="120"> -->
+          
+          <textarea id="review_text" name="review_text" rows="4" cols="50"></textarea>
+          <div >
+            <a class="stars" onclick='checkrating(1)' id="s1">★</a>
+            <a class="stars" onclick='checkrating(2)' id="s2">★</a>
+            <a class="stars" onclick='checkrating(3)' id="s3">★</a>
+            <a class="stars" onclick='checkrating(4)' id="s4">★</a>
+            <a class="stars" onclick='checkrating(5)' id="s5">★</a>
+          </div>
+
+          <button class="buttons" onclick='postData("{{recipe_id}}")'>Rate!</button>
+        {% endif %}
+          <!--<form action="/recipes/add_review/{{recipe_id}}/" method="POST">
+            {% csrf_token %}
+            {{reviews_form}}
+            <div class="rating rating2">
+              <a  value=0 onclick='checkrating("{{reviews_form.review_rating.value}}")' >★</a>
+              <a data-value=1 value=1 onclick='checkrating("{{reviews_form.review_rating.value}}")'>★</a>
+              <a href="#3" title="Give 3 stars" data-value="3">★</a>
+              <a href="#2" title="Give 2 stars" data-value="2">★</a>
+              <a href="#1" title="Give 1 star" data-value="1">★</a>
+            </div>
+            
+            
+            <button type="submit" class="btn btn-primary">
+               Add review
+            </button>
+            
+        </form>--> 
+    </html>
+ 

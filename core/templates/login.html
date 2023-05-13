@@ -1,0 +1,66 @@
+<html>
+  <head>
+    {% include "bootstrap.html" %} {% load static %}
+
+    <style>
+      table {
+        position: absolute;
+        margin-left: 800px;
+        margin-top: 200px;
+        color: white;
+      }
+      table th,
+      td {
+        padding-top: 30px;
+        font-size: 30px;
+      }
+      button {
+        background-color: coral; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+        font-size: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    {% include "nav.html" %}
+
+    <div
+      style="
+        background-image: url('/static/home_page.jpeg');
+        width: 1800px;
+        height: 615px;
+      "
+    >
+      <form action="/login/" method="POST" autocomplete="off">
+        {% csrf_token %}
+        <table>
+          {{ login_form.as_table }}
+          <tr>
+            <td>
+              <button type="submit">Login!</button>
+            </td>
+          </tr>
+        </table>
+      </form>
+
+      {% for message in messages %}
+
+      <div class="alert alert-success">
+        <a class="close" href="#" data-dismiss="alert">×</a>
+        {{ message }}
+      </div>
+
+      {% endfor %}
+    </div>
+  </body>
+</html>
